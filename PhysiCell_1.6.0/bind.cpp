@@ -1,11 +1,13 @@
-// c++ -O3 -Wall -shared -std=c++11 -undefined dynamic_lookup `python3 -m pybind11 --includes` bind.cpp -o bind`python3-config --extension-suffix`
+// Rf. Makefile: 'bind' target
+// clang++ -O3 -fomit-frame-pointer -Xpreprocessor -fopenmp -m64 -std=c++11   -O3 -I./core -I./modules -Wall -shared -std=c++11 -undefined dynamic_lookup `python3 -m pybind11 --includes` bind.cpp -o pyphysicell`python3-config --extension-suffix` BioFVM_vector.o BioFVM_mesh.o BioFVM_microenvironment.o BioFVM_solvers.o BioFVM_matlab.o BioFVM_utilities.o BioFVM_basic_agent.o BioFVM_MultiCellDS.o BioFVM_agent_container.o   pugixml.o PhysiCell_phenotype.o PhysiCell_cell_container.o PhysiCell_standard_models.o PhysiCell_cell.o PhysiCell_custom.o PhysiCell_utilities.o  PhysiCell_SVG.o PhysiCell_pathology.o PhysiCell_MultiCellDS.o PhysiCell_various_outputs.o PhysiCell_pugixml.o PhysiCell_settings.o heterogeneity.o  -L/usr/local/opt/libomp/lib -lomp
 
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
-#include "core/PhysiCell_cell.h"
-#include "core/PhysiCell_phenotype.h"
+#include "PhysiCell_cell.h"
+#include "PhysiCell_phenotype.h"
+#include "PhysiCell_settings.h"
 
 PYBIND11_MODULE(pyphysicell, m) {
     // m.doc() = "pybind11 pcell plugin"; // optional module docstring
@@ -20,7 +22,11 @@ PYBIND11_MODULE(pyphysicell, m) {
         // .def("setName", &Cell_Definition::setName)
         // .def("getName", &PhysiCell::Cell_Definition::getName);
 
+    py::class_<BioFVM::Microenvironment>(m, "Microenvironment").def(py::init<>());
+    m.def("initialize_microenvironment", &BioFVM::initialize_microenvironment, "Initialize the microenv");
+
     // m.def("add", &add, "A function which adds two numbers");
+    m.def("load_PhysiCell_config_file", &PhysiCell::load_PhysiCell_config_file, "Load config params from XML");
 }
 
 // py::class_<Cell_Definition>(m, "Cell_Definition")
