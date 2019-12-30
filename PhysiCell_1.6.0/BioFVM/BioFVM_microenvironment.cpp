@@ -1048,6 +1048,12 @@ void Microenvironment::reset_all_gradient_vectors( void )
 
 Microenvironment microenvironment; 
 
+// add for pybind11; declare this function in the header too.
+Microenvironment get_microenvironment(void)
+{
+	return microenvironment; 
+}
+
 Microenvironment_Options::Microenvironment_Options()
 {
 	use_oxygen_as_first_field = true; 
@@ -1097,6 +1103,12 @@ Microenvironment_Options::Microenvironment_Options()
 }
 
 Microenvironment_Options default_microenvironment_options; 
+
+// add for pybind11; declare this function in the header too.
+Microenvironment_Options get_microenvironment_options(void)
+{
+	return default_microenvironment_options; 
+}
 
 void initialize_microenvironment( void )
 {

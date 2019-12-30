@@ -322,6 +322,10 @@ extern Microenvironment microenvironment;
 
 void initialize_microenvironment( void ); 
 
+// add for pybind11
+Microenvironment get_microenvironment( void ); 
+Microenvironment_Options get_microenvironment_options(void);
+
 };
 
 #endif
