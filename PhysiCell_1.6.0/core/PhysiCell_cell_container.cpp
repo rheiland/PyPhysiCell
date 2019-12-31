@@ -430,7 +430,9 @@ void Cell_Container::flag_cell_for_removal( Cell* pCell )
 }
 
 
-Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
+// rwh, pybind11
+//Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
+void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
 {
 	Cell_Container* cell_container = new Cell_Container;
 	cell_container->initialize( m.mesh.bounding_box[0], m.mesh.bounding_box[3], 
@@ -443,7 +445,7 @@ Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenviron
 		BioFVM::set_default_microenvironment( &m ); 
 	}
 	
-	return cell_container; 
+	// return cell_container; 
 }
 
 };

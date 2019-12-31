@@ -9,8 +9,13 @@ namespace py = pybind11;
 #include "PhysiCell_cell.h"
 #include "PhysiCell_phenotype.h"
 #include "PhysiCell_settings.h"
+#include "heterogeneity.h"
 
 PYBIND11_MODULE(pyphysicell, m) {
+
+    //---------------------------------------------
+    // PhysiCell-specific
+    //
     // m.doc() = "pybind11 pcell plugin"; // optional module docstring
     py::class_<PhysiCell::Cell_Definition>(m, "Cell_Definition")
         .def(py::init<const std::string &>())
@@ -23,8 +28,35 @@ PYBIND11_MODULE(pyphysicell, m) {
         // .def("setName", &Cell_Definition::setName)
         // .def("getName", &PhysiCell::Cell_Definition::getName);
 
+    py::class_<PhysiCell::PhysiCell_Settings>(m, "PhysiCell_Settings")
+        // .def(py::init<>());
+        .def_readwrite("max_time", &PhysiCell::PhysiCell_Settings::max_time)
+        .def_readwrite("omp_num_threads", &PhysiCell::PhysiCell_Settings::omp_num_threads);
+
+    m.def("get_physicell_settings", &PhysiCell::get_physicell_settings, "Get XML settings");
+    // m.def("get_user_parameters", &PhysiCell::get_user_parameters, "Get XML user params");
+
+
+    py::class_<PhysiCell::PhysiCell_Globals>(m, "PhysiCell_Globals")
+        // .def(py::init<>());
+    // double current_time = 0.0; 
+	// double next_full_save_time = 0.0; 
+	// double next_SVG_save_time = 0.0; 
+	// int full_output_index = 0; 
+	// int SVG_output_index = 0; 
+        .def_readwrite("current_time", &PhysiCell::PhysiCell_Globals::current_time)
+        .def_readwrite("next_SVG_save_time", &PhysiCell::PhysiCell_Globals::next_SVG_save_time);
+
+    m.def("get_physicell_globals", &PhysiCell::get_physicell_globals, "Get global time values");
+    m.def("create_cell_container_for_microenvironment", &PhysiCell::create_cell_container_for_microenvironment, "Create container for all cells");
+
+
+    //---------------------------------------------
+    // BioFVM-specific
+    //
     py::class_<BioFVM::Microenvironment>(m, "Microenvironment")
     // .def(py::init<>());
+        .def("simulate_diffusion_decay", &BioFVM::Microenvironment::simulate_diffusion_decay)
         .def_readwrite("decay_rates", &BioFVM::Microenvironment::decay_rates);
 
     py::class_<BioFVM::Microenvironment_Options>(m, "Microenvironment_Options")
@@ -41,6 +73,11 @@ PYBIND11_MODULE(pyphysicell, m) {
     m.def("initialize_microenvironment", &BioFVM::initialize_microenvironment, "Initialize the microenv");
     m.def("get_microenvironment", &BioFVM::get_microenvironment, "Get the default microenv");
     m.def("get_microenvironment_options", &BioFVM::get_microenvironment_options, "Get the default microenv options");
+
+    // Custom model function (in /custom_modules) 
+    m.def("create_cell_types", &create_cell_types, "Create the cell types");
+    m.def("setup_tissue", &setup_tissue, "Create the cells (tissue)");
+    m.def("setup_tissue1", &setup_tissue1, "Create 1 cell");
 
     // m.def_property("microenvironment", 
         // []() {return BioFVM::microenvironment; });
