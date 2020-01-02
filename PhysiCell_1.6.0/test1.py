@@ -4,6 +4,8 @@ import faulthandler
 
 faulthandler.enable()
 
+# --- TODO! Delete model, e.g. all_cells->size()  --> 0
+
 retval = load_PhysiCell_config_file("config/Physicell_settings.xml")
 # retval = load_PhysiCell_config_file("config/cancerbots.xml")
 initialize_microenvironment()   # in setup_microenvironment()
@@ -45,7 +47,8 @@ phenotype_dt = 6.0
 # BioFVM::TIC();
 
 # for mytime in np.arange(0, settings.max_time, tdel):
-for istep in range(0, 5):
+max_steps = settings.max_time / diffusion_dt
+for istep in range(0, 10):
     # print('time (for loop)=',mytime)
     print('current_time=',pc_globals.current_time)
 
@@ -60,6 +63,7 @@ for istep in range(0, 5):
 #	update_all_cells(t, phenotype_dt, mechanics_dt , diffusion_dt );
     # update_all_cells(mytime)
     update_all_cells(pc_globals.current_time)
+    print('# cells= ',get_num_cells())
 			
 	# PhysiCell_globals.current_time += diffusion_dt
     pc_globals.current_time += diffusion_dt
