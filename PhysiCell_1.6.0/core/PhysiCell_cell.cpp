@@ -545,6 +545,8 @@ Cell_Container * Cell::get_container()
 {
 	if(container == NULL)
 	{
+		// std::cout <<"Cell::get_container(): get_microenvironment() = " <<get_microenvironment() << std::endl ;
+		// std::cout <<"Cell::get_container(): get_microenvironment()->agent_container = " <<get_microenvironment()->agent_container << std::endl ;
 		container = (Cell_Container *)get_microenvironment()->agent_container;
 	}
 	

@@ -128,7 +128,7 @@ class Cell_Definition
 	Cell_Definition( Cell_Definition& cd ); // copy constructor 
 	Cell_Definition& operator=( const Cell_Definition& cd ); // copy assignment 
 
-	//rwh
+	//rwh, pybind11
 	Cell_Definition(const std::string &name) : name(name) { }
     // void setName(const std::string &name_) { name = name_; }
     const std::string &getName() const { return name; }

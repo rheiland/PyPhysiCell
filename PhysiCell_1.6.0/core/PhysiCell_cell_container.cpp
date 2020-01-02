@@ -431,8 +431,8 @@ void Cell_Container::flag_cell_for_removal( Cell* pCell )
 
 
 // rwh, pybind11
-//Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
-void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
+// void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
+Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size )
 {
 	Cell_Container* cell_container = new Cell_Container;
 	cell_container->initialize( m.mesh.bounding_box[0], m.mesh.bounding_box[3], 
@@ -444,8 +444,61 @@ void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , d
 	{ 
 		BioFVM::set_default_microenvironment( &m ); 
 	}
+	// std::cout <<"create_cell_container_for_microenvironment(): get_microenvironment()->agent_container = " <<BioFVM::get_microenvironment()->agent_container << std::endl ;
+	std::cout <<"create_cell_container_for_microenvironment(): get_instance_microenvironment().agent_container = " <<BioFVM::get_instance_microenvironment().agent_container << std::endl ;
+	
+	return cell_container; 
+}
+// pybind11
+void create_cell_container2( double mechanics_voxel_size )
+{
+	Microenvironment* menv = BioFVM::get_default_microenvironment();
+	if( menv == NULL )
+	{ 
+		// BioFVM::set_default_microenvironment( &m ); 
+		std::cout <<"create_cell_container2(): get_default_microenvironment() is NULL!" << std::endl;
+	}
+	Cell_Container* cell_container = new Cell_Container;
+	cell_container->initialize( menv->mesh.bounding_box[0], menv->mesh.bounding_box[3], 
+		menv->mesh.bounding_box[1], menv->mesh.bounding_box[4], 
+		menv->mesh.bounding_box[2], menv->mesh.bounding_box[5],  mechanics_voxel_size );
+	menv->agent_container = (Agent_Container*) cell_container; 
+	
+	// if( BioFVM::get_default_microenvironment() == NULL )
+	// { 
+	// 	BioFVM::set_default_microenvironment( &m ); 
+	// }
+	// std::cout <<"create_cell_container_for_microenvironment(): get_microenvironment()->agent_container = " <<BioFVM::get_microenvironment()->agent_container << std::endl ;
+	// std::cout <<"create_cell_container2(): get_instance_microenvironment().agent_container = " <<BioFVM::get_instance_microenvironment().agent_container << std::endl ;
 	
 	// return cell_container; 
+}
+
+// pybind11
+void update_all_cells(double t)
+{
+	// void Cell_Container::update_all_cells(double t, double phenotype_dt_ , double mechanics_dt_ , double diffusion_dt_ )
+
+	// main.cpp
+	// ((Cell_Container *)microenvironment.agent_container)->update_all_cells( PhysiCell_globals.current_time );
+
+	((Cell_Container *)microenvironment.agent_container)->update_all_cells(t, phenotype_dt, mechanics_dt , diffusion_dt );
+	return; 
+}
+
+// pybind11
+int get_num_cells( void )
+{
+	return (*all_cells).size();
+}
+
+// pybind11
+std::vector<double> get_cells_pos2D( void )
+{
+	std::vector<double> retval = {42., 42.1, 42.2 };
+ 
+    retval.push_back(42.3);
+	return retval;
 }
 
 };

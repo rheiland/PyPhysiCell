@@ -120,10 +120,14 @@ class Cell_Container : public BioFVM::Agent_Container
 int find_escaping_face_index(Cell* agent);
 extern std::vector<Cell*> *all_cells; 
 
-// pybind11
-// Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size );
-void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size );
+Cell_Container* create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size );
+// void create_cell_container_for_microenvironment( BioFVM::Microenvironment& m , double mechanics_voxel_size );
 
+// pybind11
+void create_cell_container2( double mechanics_voxel_size );
+int get_num_cells( void );
+std::vector<double> get_cells_pos2D( void );
+void update_all_cells( double t );
 
 
 };

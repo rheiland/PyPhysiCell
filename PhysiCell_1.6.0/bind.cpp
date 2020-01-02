@@ -47,8 +47,22 @@ PYBIND11_MODULE(pyphysicell, m) {
         .def_readwrite("current_time", &PhysiCell::PhysiCell_Globals::current_time)
         .def_readwrite("next_SVG_save_time", &PhysiCell::PhysiCell_Globals::next_SVG_save_time);
 
+
+    //py::class_<PhysiCell::Cell_Container::update_all_cells>(m, "PhysiCell_Globals")
+    // 	void update_all_cells(double t);  
+    // py::class_<PhysiCell::Cell_Container>(m, "Cell_Container")
+        // .def("update_all_cells", &PhysiCell::Cell_Container::update_all_cells(double t), py::arg("t") );
+        // .def("update_all_cells", &PhysiCell::Cell_Container::update_all_cells(double t), py::arg("t") );
+        // .def("update_all_cells", &PhysiCell::Cell_Container::update_all_cells<double> );
+
+
+
     m.def("get_physicell_globals", &PhysiCell::get_physicell_globals, "Get global time values");
-    m.def("create_cell_container_for_microenvironment", &PhysiCell::create_cell_container_for_microenvironment, "Create container for all cells");
+    // m.def("create_cell_container_for_microenvironment", &PhysiCell::create_cell_container_for_microenvironment, "Create container for all cells");
+    m.def("create_cell_container2", &PhysiCell::create_cell_container2, "Create container for all cells");
+    m.def("get_cells_pos2D", &PhysiCell::get_cells_pos2D, "Get all x,y positions of 2D cells");
+    m.def("get_num_cells", &PhysiCell::get_num_cells, "Get number of cells");
+    m.def("update_all_cells", &PhysiCell::update_all_cells,"Update all cells at dt_diffusion", py::arg("t") = 0.01 );
 
 
     //---------------------------------------------
@@ -71,7 +85,7 @@ PYBIND11_MODULE(pyphysicell, m) {
     // py::class_<CppSingle>(mod, "Single")
 
     m.def("initialize_microenvironment", &BioFVM::initialize_microenvironment, "Initialize the microenv");
-    m.def("get_microenvironment", &BioFVM::get_microenvironment, "Get the default microenv");
+    m.def("get_instance_microenvironment", &BioFVM::get_instance_microenvironment, "Get the default microenv");
     m.def("get_microenvironment_options", &BioFVM::get_microenvironment_options, "Get the default microenv options");
 
     // Custom model function (in /custom_modules) 
