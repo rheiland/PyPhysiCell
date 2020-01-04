@@ -6,7 +6,8 @@ faulthandler.enable()
 
 # --- TODO! Delete model, e.g. all_cells->size()  --> 0
 
-retval = load_PhysiCell_config_file("config/Physicell_settings.xml")
+#retval = load_PhysiCell_config_file("config/Physicell_settings.xml")
+retval = load_PhysiCell_config_file("biorobots.xml")
 # retval = load_PhysiCell_config_file("config/cancerbots.xml")
 initialize_microenvironment()   # in setup_microenvironment()
 menv = get_instance_microenvironment()
@@ -64,6 +65,12 @@ for istep in range(0, 10):
     # update_all_cells(mytime)
     update_all_cells(pc_globals.current_time)
     print('# cells= ',get_num_cells())
+
+    # sprintf( filename , "%s/snapshot%08u.svg" , PhysiCell_settings.folder.c_str() , PhysiCell_globals.SVG_output_index ); 
+    # SVG_plot( filename , microenvironment, 0.0 , PhysiCell_globals.current_time, cell_coloring_function );
+
+    # std::vector<std::string> (*cell_coloring_function)(Cell*) = heterogeneity_coloring_function;
+    # std::vector<std::string> heterogeneity_coloring_function( Cell* pCell )
 			
 	# PhysiCell_globals.current_time += diffusion_dt
     pc_globals.current_time += diffusion_dt

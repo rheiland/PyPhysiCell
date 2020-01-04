@@ -9,7 +9,8 @@ namespace py = pybind11;
 #include "PhysiCell_cell.h"
 #include "PhysiCell_phenotype.h"
 #include "PhysiCell_settings.h"
-#include "heterogeneity.h"
+// #include "heterogeneity.h"
+#include "biorobots.h"
 
 PYBIND11_MODULE(pyphysicell, m) {
 
@@ -61,6 +62,9 @@ PYBIND11_MODULE(pyphysicell, m) {
     // m.def("create_cell_container_for_microenvironment", &PhysiCell::create_cell_container_for_microenvironment, "Create container for all cells");
     m.def("create_cell_container2", &PhysiCell::create_cell_container2, "Create container for all cells");
     m.def("get_cells_pos2D", &PhysiCell::get_cells_pos2D, "Get all x,y positions of 2D cells");
+    m.def("get_cells_x", &PhysiCell::get_cells_x, "Get all x positions of cells");
+    m.def("get_cells_y", &PhysiCell::get_cells_y, "Get all y positions of cells");
+    m.def("get_cells_types", &PhysiCell::get_cells_types, "Get types of all cells");
     m.def("get_num_cells", &PhysiCell::get_num_cells, "Get number of cells");
     m.def("update_all_cells", &PhysiCell::update_all_cells,"Update all cells at dt_diffusion", py::arg("t") = 0.01 );
 
@@ -91,7 +95,7 @@ PYBIND11_MODULE(pyphysicell, m) {
     // Custom model function (in /custom_modules) 
     m.def("create_cell_types", &create_cell_types, "Create the cell types");
     m.def("setup_tissue", &setup_tissue, "Create the cells (tissue)");
-    m.def("setup_tissue1", &setup_tissue1, "Create 1 cell");
+    // m.def("setup_tissue1", &setup_tissue1, "Create 1 cell");
 
     // m.def_property("microenvironment", 
         // []() {return BioFVM::microenvironment; });

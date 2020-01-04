@@ -79,7 +79,8 @@
 
 // custom user modules 
 
-#include "./custom_modules/heterogeneity.h" 
+// #include "./custom_modules/heterogeneity.h" 
+#include "./custom_modules/biorobots.h" 
 	
 using namespace BioFVM;
 using namespace PhysiCell;
@@ -113,9 +114,11 @@ int main( int argc, char* argv[] )
  	
 	// set mechanics voxel size, and match the data structure to BioFVM
 	double mechanics_voxel_size = 30; 
-	Cell_Container* cell_container = create_cell_container_for_microenvironment( microenvironment, mechanics_voxel_size );
+	// Cell_Container* cell_container = create_cell_container_for_microenvironment( microenvironment, mechanics_voxel_size );
+	create_cell_container_for_microenvironment( microenvironment, mechanics_voxel_size );
 	
 	create_cell_types();
+	// setup_tissue1();
 	setup_tissue();
 	
 	/* Users typically start modifying here. START USERMODS */ 
@@ -142,7 +145,8 @@ int main( int argc, char* argv[] )
 
 	// for simplicity, set a pathology coloring function 
 	
-	std::vector<std::string> (*cell_coloring_function)(Cell*) = heterogeneity_coloring_function;
+	// std::vector<std::string> (*cell_coloring_function)(Cell*) = heterogeneity_coloring_function;
+	std::vector<std::string> (*cell_coloring_function)(Cell*) = robot_coloring_function;
 	
 	sprintf( filename , "%s/initial.svg" , PhysiCell_settings.folder.c_str() ); 
 	SVG_plot( filename , microenvironment, 0.0 , PhysiCell_globals.current_time, cell_coloring_function );
