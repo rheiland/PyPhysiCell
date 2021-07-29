@@ -34,7 +34,7 @@ PYBIND11_MODULE(pyphysicell, m) {
         .def_readwrite("max_time", &PhysiCell::PhysiCell_Settings::max_time)
         .def_readwrite("omp_num_threads", &PhysiCell::PhysiCell_Settings::omp_num_threads);
 
-    m.def("get_physicell_settings", &PhysiCell::get_physicell_settings, "Get XML settings");
+//    m.def("get_physicell_settings", &PhysiCell::get_physicell_settings, "Get XML settings");
     // m.def("get_user_parameters", &PhysiCell::get_user_parameters, "Get XML user params");
 
 
@@ -58,13 +58,13 @@ PYBIND11_MODULE(pyphysicell, m) {
 
 
 
-    m.def("get_physicell_globals", &PhysiCell::get_physicell_globals, "Get global time values");
+//    m.def("get_physicell_globals", &PhysiCell::get_physicell_globals, "Get global time values");
     // m.def("create_cell_container_for_microenvironment", &PhysiCell::create_cell_container_for_microenvironment, "Create container for all cells");
     m.def("create_cell_container2", &PhysiCell::create_cell_container2, "Create container for all cells");
     m.def("get_cells_pos2D", &PhysiCell::get_cells_pos2D, "Get all x,y positions of 2D cells");
-    m.def("get_cells_x", &PhysiCell::get_cells_x, "Get all x positions of cells");
-    m.def("get_cells_y", &PhysiCell::get_cells_y, "Get all y positions of cells");
-    m.def("get_cells_types", &PhysiCell::get_cells_types, "Get types of all cells");
+//    m.def("get_cells_x", &PhysiCell::get_cells_x, "Get all x positions of cells");
+//    m.def("get_cells_y", &PhysiCell::get_cells_y, "Get all y positions of cells");
+//    m.def("get_cells_types", &PhysiCell::get_cells_types, "Get types of all cells");
     m.def("get_num_cells", &PhysiCell::get_num_cells, "Get number of cells");
     m.def("update_all_cells", &PhysiCell::update_all_cells,"Update all cells at dt_diffusion", py::arg("t") = 0.01 );
 
@@ -89,7 +89,7 @@ PYBIND11_MODULE(pyphysicell, m) {
     // py::class_<CppSingle>(mod, "Single")
 
     m.def("initialize_microenvironment", &BioFVM::initialize_microenvironment, "Initialize the microenv");
-    m.def("get_instance_microenvironment", &BioFVM::get_instance_microenvironment, "Get the default microenv");
+//    m.def("get_instance_microenvironment", &BioFVM::get_instance_microenvironment, "Get the default microenv");
     m.def("get_microenvironment_options", &BioFVM::get_microenvironment_options, "Get the default microenv options");
 
     // Custom model function (in /custom_modules) 
