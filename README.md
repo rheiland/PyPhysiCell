@@ -12,7 +12,7 @@ make
 make bind
 ```
 
-If successful, it should create `pyphysicell.cpython-36m-darwin.so` (on macOS).
+If successful, it should create `pyphysicell.cpython-38-darwin.so` (on macOS).
 
 ```
 ~/git/PyPhysiCell/PhysiCell_1.6.0$ python
